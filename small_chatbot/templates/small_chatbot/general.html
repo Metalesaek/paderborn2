@@ -1,0 +1,189 @@
+{% extends 'small_chatbot/base.html' %}
+{% load static %}
+
+
+
+
+
+
+    
+
+    
+    {% block style %}
+    <style type="text/css">
+    .sidenav {
+      height:100%;
+      width:160px;
+      position: fixed;
+      z-index:1;
+      top:0;
+      right:0;
+      background-color:#111;
+      overflow-x: :hidden;
+      padding-top:20px;
+    }
+ 
+    .sidenav a {
+      padding:6px 8px 6px 16px;
+      text-decoration: none;
+      font-size:15px;
+      color: white;
+      display:block;
+    }
+ 
+    .sidenav a:hover{
+      color:lightblue;
+    } 
+ 
+    .main{
+      margin-left:160px;
+      padding: 0px 10px;
+    }
+     ul li:last-of-type {
+        text-align:right;
+    }
+        #conversation {
+            height: 500px;
+            border: 1px solid #000;
+            margin-bottom: 50px;
+            margin-top: 50px;
+            margin-right: 200px;
+            margin-left: 200px;
+            overflow-y: scroll;
+            background-color: #424755;
+        }
+        #button2 {
+          background-color: #4CAF50;
+          border: none;
+          color: white;
+          padding: 15px 32px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          margin: 4px 2px;
+          cursor: pointer;
+        }
+        .container {
+            display: flex;
+        }
+
+        .container textarea {
+            flex: 1;
+            margin-left: 150px;
+            margin-bottom: 50px;
+            font-size: 16px;
+        }
+
+        .container input[type="submit"]{
+            flex-shrink: 0;
+            background: #444655;
+            color: #fff;
+            border: 0px;
+            padding: 8px 16px;
+            margin-bottom: 50px;
+            margin-left: 0px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .button1 {
+              background-color: white; 
+              color: black; 
+              border: 2px solid #4CAF50;
+            }
+
+            .button1:hover {
+              background-color: #4CAF50;
+              color: white;
+            }
+
+        .user-messages{
+            width: 100%;
+            padding: 10px;
+            background: #343541;
+            color: #fff;
+        }
+        .chatbot-messages{
+            width: 100%;
+            padding: 10px;
+            background: #444655;
+            color: #fff;
+        }
+        .chatbot-messages1{
+            width: 100%;
+            padding: 10px;
+            background: #444655;
+            color: #fff;
+        }
+        .chatbot-messages1 p {
+              margin:0px;
+              white-space:nowrap;
+              overflow:hidden;
+              animation:typing 4s steps(22,end) forwards,
+                        blink 1s infinite;
+            }
+            @keyframes typing {
+              0% { width:0% }
+              100% { width:100% }
+            }
+            @keyframes blink {
+              0%,100% {
+                border-right:2px solid transparent;
+              }
+              50% {
+                border-right:2px solid #222;
+              }
+            }
+</style>
+    {% endblock %}
+  
+  {% block content %}
+
+    <center><h1 class="text-dark">general Chatbot</h1></center>
+   
+
+      <div id="conversation">
+          {% for message in conversation1 %}
+              {% if message.role == 'user' %}
+                  <div class="user-messages"><p>You: {{ message.content }}</p></div>
+              {% elif message.role == 'assistant' %}
+                {% if reply1 == message.content %}
+                  <div class="chatbot-messages"><p> {{ message.content }}</p></div>
+                {% else %}
+                  <div class="chatbot-messages"><p> {{ message.content }}</p></div>
+                {% endif %}  
+              {% endif %}
+          {% endfor %}
+      </div> 
+      
+      <form id="chat-form" method="POST" action="{% url 'general' %}">
+          {% csrf_token %}
+          <div class="container">
+              <textarea rows="3" class="centered-textarea" id="user-input" type="text" name="user_input" placeholder="Your message"></textarea>
+              <input type="submit" value="Send">
+          </div>
+      </form>
+     
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const chatForm = document.getElementById('chat-form');
+            const userInput = document.getElementById('user-input');
+            const conversation = document.getElementById('conversation');
+
+            // Scroll conversation to the bottom
+            conversation.scrollTop = conversation.scrollHeight;
+
+            // Submit the form when the user presses Enter key
+            userInput.addEventListener('keypress', (event) => {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    chatForm.submit();
+                }
+            });
+
+            // Focus on the user input field
+            userInput.focus();
+        });
+    </script> 
+{% endblock %}

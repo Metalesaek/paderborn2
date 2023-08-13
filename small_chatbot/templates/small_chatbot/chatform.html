@@ -1,0 +1,38 @@
+{% extends 'small_chatbot/base.html' %}
+{% load crispy_forms_tags %} 
+  {% block content %}
+
+
+
+
+
+
+
+<div class="container">
+  <br><br>
+  <center><h2 class="text-dark">Choose the Topic and the number of sources </h2></center>
+  <br><br>
+</div>
+  <div class="text-light"></div>
+  <div class="container"><br>
+      <form method="post">
+          {% csrf_token %}
+        <div class="form-row">
+          <div class="form-group col-md-4 mb-0">
+            {{ form.topic|as_crispy_field }}
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group  col-md-4 mb-0 ">
+          {{ form.num_source|as_crispy_field }}
+          </div>
+        </div>
+          
+        <br> 
+        <button type="submit" class="btn btn-outline-primary">Valider</button>  
+      </form>
+  </div>
+
+ 
+
+  {% endblock %}
