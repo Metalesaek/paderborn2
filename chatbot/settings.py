@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from django.conf import settings
 from pathlib import Path
+from decouple import config
 
 from django.templatetags.static import static
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -23,7 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure--gc7&w-eg!5z9mf6qt%t2c-+@!_%oamo+sq!)gj8&f6s=obhg9'
+SECRET_KEY = config('SECRET_KEY')
+API_URL = config('API_URL')
+API_KEY = config('API_KEY')
+API_BARD = config('API_BARD')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -34,6 +38,7 @@ ALLOWED_HOSTS = ['localhost',]
 # Application definition
 
 INSTALLED_APPS = [
+    "daphne",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -75,7 +80,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'chatbot.wsgi.application'
 
-
+ASGI_APPLICATION = "chatbot.asgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -128,3 +133,4 @@ STATIC_ROOT = BASE_DIR / 'static'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
