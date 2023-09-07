@@ -32,7 +32,7 @@ def once_call(request):
 	return render(request, 'small_chatbot/once_call.html', {})
 
 '''
-headers = {"Authorization": 'ZcV7DB2my2sDry6q9z+PzkJ5Kn2OjLsj9gHnm+5PAmc='}
+headers = {"Authorization": settings.API_flowise}
 def query(payload):
 	response = requests.post(settings.API_URL, headers=headers, json=payload)
 	return response.json()

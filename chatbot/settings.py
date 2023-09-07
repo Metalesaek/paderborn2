@@ -28,6 +28,7 @@ SECRET_KEY = config('SECRET_KEY')
 API_URL = config('API_URL')
 API_KEY = config('API_KEY')
 API_BARD = config('API_BARD')
+API_flowise = config('API_flowise')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
